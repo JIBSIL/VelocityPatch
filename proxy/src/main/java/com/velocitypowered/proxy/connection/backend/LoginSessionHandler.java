@@ -92,8 +92,11 @@ public class LoginSessionHandler implements MinecraftSessionHandler {
       if (packet.content().readableBytes() == 1) {
         requestedForwardingVersion = packet.content().readByte();
       }
-      String hashedSecret = new ServerHashing(server).generateSecret(serverConn.getServer().toString());
-      ByteBuf forwardingData = createForwardingData(configuration.getForwardingSecret(),
+      String serverString = serverConn.getServer().toString();
+      String hashedSecret = new ServerHashing(server).generateSecret(serverString);
+      byte[] secretBytes = hashedSecret.getBytes();
+      //ByteBuf forwardingData = createForwardingData(configuration.getForwardingSecret(),
+      ByteBuf forwardingData = createForwardingData(secretBytes,
           serverConn.getPlayerRemoteAddressAsString(), serverConn.getPlayer(),
           requestedForwardingVersion);
 
