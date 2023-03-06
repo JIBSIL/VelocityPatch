@@ -16,7 +16,7 @@ public class ServerHashing {
         this.server = server;
     }
 
-    public byte[] generateSecret(String variableKey) {
+    public String generateSecret(String variableKey) {
         // Concatenate the secret key and variable key
         VelocityConfiguration configuration = server.getConfiguration();
         byte[] secretKey = configuration.getForwardingSecret();
