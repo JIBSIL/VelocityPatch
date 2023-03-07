@@ -22,7 +22,6 @@ import com.velocitypowered.proxy.config.VelocityConfiguration;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 /**
  * Hashes a server given the forwarding key, allowing for per-server forwarding secrets.
@@ -41,7 +40,7 @@ public class ServerHashing {
     // Concatenate the secret key and variable key
     VelocityConfiguration configuration = server.getConfiguration();
     byte[] secretKey = configuration.getForwardingSecret();
-    String combinedKey = Arrays.toString(secretKey) + variableKey;
+    String combinedKey = new String(secretKey) + variableKey;
 
     // Hash the combined key using SHA-256
     try {

@@ -39,6 +39,7 @@ import com.velocitypowered.proxy.protocol.packet.LoginPluginMessage;
 import com.velocitypowered.proxy.protocol.packet.LoginPluginResponse;
 import com.velocitypowered.proxy.protocol.packet.ServerLoginSuccess;
 import com.velocitypowered.proxy.protocol.packet.SetCompression;
+import com.velocitypowered.proxy.server.VelocityRegisteredServer;
 import com.velocitypowered.proxy.util.except.QuietRuntimeException;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
@@ -92,7 +93,8 @@ public class LoginSessionHandler implements MinecraftSessionHandler {
       if (packet.content().readableBytes() == 1) {
         requestedForwardingVersion = packet.content().readByte();
       }
-      String serverString = serverConn.getServer().toString();
+      VelocityRegisteredServer serverCon = serverConn.getServer();
+      String serverString = serverCon.getServerInfo().getName();
       String hashedSecret = new ServerHashing(server).generateSecret(serverString);
       byte[] secretBytes = hashedSecret.getBytes();
       //ByteBuf forwardingData = createForwardingData(configuration.getForwardingSecret(),
